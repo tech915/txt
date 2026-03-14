@@ -1,0 +1,275 @@
+Practical 1 – Product of 4 Numbers
+Login.aspx
+<form id="form1" runat="server">
+
+Enter Number 1:
+<asp:TextBox ID="txt1" runat="server"></asp:TextBox><br/>
+
+Enter Number 2:
+<asp:TextBox ID="txt2" runat="server"></asp:TextBox><br/>
+
+Enter Number 3:
+<asp:TextBox ID="txt3" runat="server"></asp:TextBox><br/>
+
+Enter Number 4:
+<asp:TextBox ID="txt4" runat="server"></asp:TextBox><br/>
+
+<asp:Button ID="btnCalc" runat="server" Text="Calculate" OnClick="btnCalc_Click"/>
+
+Result:
+<asp:Label ID="lblResult" runat="server"></asp:Label>
+
+</form>
+
+Login.aspx.cs
+protected void btnCalc_Click(object sender, EventArgs e)
+{
+    int a = int.Parse(txt1.Text);
+    int b = int.Parse(txt2.Text);
+    int c = int.Parse(txt3.Text);
+    int d = int.Parse(txt4.Text);
+
+    int product = a * b * c * d;
+
+    lblResult.Text = "Product = " + product;
+}
+
+Practical 2 – Phone Book + Pythagoras
+Login.aspx
+<form runat="server">
+
+Name:
+<asp:TextBox ID="txtName" runat="server"></asp:TextBox>
+
+Phone:
+<asp:TextBox ID="txtPhone" runat="server"></asp:TextBox>
+
+<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click"/>
+
+<asp:Label ID="lblPhoneBookResult" runat="server"></asp:Label>
+
+<br/><br/>
+
+Side A:
+<asp:TextBox ID="txtA" runat="server"></asp:TextBox>
+
+Side B:
+<asp:TextBox ID="txtB" runat="server"></asp:TextBox>
+
+<asp:Button ID="btnPythagoras" runat="server" Text="Calculate" OnClick="btnPythagoras_Click"/>
+
+<asp:Label ID="lblPythagorasResult" runat="server"></asp:Label>
+
+</form>
+
+Login.aspx.cs
+static Dictionary<string, string> phoneBook = new Dictionary<string, string>();
+
+protected void btnSave_Click(object sender, EventArgs e)
+{
+    string name = txtName.Text;
+    string phone = txtPhone.Text;
+
+    phoneBook[name] = phone;
+
+    lblPhoneBookResult.Text = "Saved: " + name + " - " + phone;
+}
+
+protected void btnPythagoras_Click(object sender, EventArgs e)
+{
+    double a = double.Parse(txtA.Text);
+    double b = double.Parse(txtB.Text);
+
+    double result = Math.Sqrt(a * a + b * b);
+
+    lblPythagorasResult.Text = "Hypotenuse = " + result;
+}
+
+Practical 3 – Fibonacci, Prime, Vowel, Reverse
+Login.aspx
+<form runat="server">
+
+Fibonacci N:
+<asp:TextBox ID="txtFib" runat="server"></asp:TextBox>
+<asp:Button ID="btnFib" runat="server" Text="Generate" OnClick="btnFib_Click"/>
+<asp:Label ID="lblFibResult" runat="server"></asp:Label>
+
+<br/><br/>
+
+Prime Number:
+<asp:TextBox ID="txtPrime" runat="server"></asp:TextBox>
+<asp:Button ID="btnPrime" runat="server" Text="Check" OnClick="btnPrime_Click"/>
+<asp:Label ID="lblPrimeResult" runat="server"></asp:Label>
+
+<br/><br/>
+
+Letter:
+<asp:TextBox ID="txtChar" runat="server"></asp:TextBox>
+<asp:Button ID="btnChar" runat="server" Text="Check" OnClick="btnChar_Click"/>
+<asp:Label ID="lblCharResult" runat="server"></asp:Label>
+
+<br/><br/>
+
+Reverse Number:
+<asp:TextBox ID="txtReverse" runat="server"></asp:TextBox>
+<asp:Button ID="btnReverse" runat="server" Text="Reverse" OnClick="btnReverse_Click"/>
+<asp:Label ID="lblReverseResult" runat="server"></asp:Label>
+
+</form>
+
+Login.aspx.cs
+protected void btnFib_Click(object sender, EventArgs e)
+{
+    int n = int.Parse(txtFib.Text);
+    int a = 0, b = 1, c;
+    string result = a + " " + b + " ";
+
+    for (int i = 3; i <= n; i++)
+    {
+        c = a + b;
+        result += c + " ";
+        a = b;
+        b = c;
+    }
+
+    lblFibResult.Text = result;
+}
+
+protected void btnPrime_Click(object sender, EventArgs e)
+{
+    int num = int.Parse(txtPrime.Text);
+    bool prime = true;
+
+    for (int i = 2; i < num; i++)
+    {
+        if (num % i == 0)
+        {
+            prime = false;
+            break;
+        }
+    }
+
+    lblPrimeResult.Text = prime ? "Prime" : "Not Prime";
+}
+
+protected void btnChar_Click(object sender, EventArgs e)
+{
+    char ch = char.Parse(txtChar.Text.ToLower());
+
+    if ("aeiou".Contains(ch))
+        lblCharResult.Text = "Vowel";
+    else
+        lblCharResult.Text = "Consonant";
+}
+
+protected void btnReverse_Click(object sender, EventArgs e)
+{
+    int num = int.Parse(txtReverse.Text);
+    int rev = 0;
+
+    while (num > 0)
+    {
+        rev = rev * 10 + num % 10;
+        num /= 10;
+    }
+
+    lblReverseResult.Text = rev.ToString();
+}
+
+Practical 4 – Validation
+WebForm1.aspx
+<form runat="server">
+
+Name:
+<asp:TextBox ID="txtName" runat="server"></asp:TextBox>
+<asp:RequiredFieldValidator ControlToValidate="txtName" runat="server"
+ErrorMessage="Required"/>
+
+Email:
+<asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
+
+Age:
+<asp:TextBox ID="txtAge" runat="server"></asp:TextBox>
+
+<asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click"/>
+
+<asp:Label ID="lblResult" runat="server"></asp:Label>
+
+</form>
+
+WebForm1.aspx.cs
+protected void btnSubmit_Click(object sender, EventArgs e)
+{
+    if (Page.IsValid)
+    {
+        lblResult.Text =
+        "Name: " + txtName.Text +
+        "<br/>Email: " + txtEmail.Text +
+        "<br/>Age: " + txtAge.Text;
+    }
+}
+
+Practical 5 – Database CRUD
+Login.aspx
+<form runat="server">
+
+RollNo:
+<asp:TextBox ID="txtRollNo" runat="server"></asp:TextBox>
+
+Name:
+<asp:TextBox ID="txtName" runat="server"></asp:TextBox>
+
+Email:
+<asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
+
+<asp:Button ID="btnInsert" runat="server" Text="Insert" OnClick="btnInsert_Click"/>
+<asp:Button ID="btnSelect" runat="server" Text="Select" OnClick="btnSelect_Click"/>
+<asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_Click"/>
+<asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click"/>
+
+<asp:Label ID="lblResult" runat="server"></asp:Label>
+
+</form>
+
+Login.aspx.cs
+string cs = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=isha;Integrated Security=True";
+
+protected void btnInsert_Click(object sender, EventArgs e)
+{
+    SqlConnection con = new SqlConnection(cs);
+    string query = "INSERT INTO Students VALUES(@r,@n,@e)";
+
+    SqlCommand cmd = new SqlCommand(query, con);
+    cmd.Parameters.AddWithValue("@r", txtRollNo.Text);
+    cmd.Parameters.AddWithValue("@n", txtName.Text);
+    cmd.Parameters.AddWithValue("@e", txtEmail.Text);
+
+    con.Open();
+    cmd.ExecuteNonQuery();
+}
+
+Practical 6 – AngularJS
+WebForm1.aspx
+<div ng-app="myapp" ng-controller="MyController">
+
+Enter Name:
+<input type="text" ng-model="name" ng-change="updateGreeting()" />
+
+<h3>{{ greeting }}</h3>
+
+</div>
+
+controller.js
+var app = angular.module("myapp", []);
+
+app.controller("MyController", function ($scope) {
+
+$scope.name = "ABC";
+
+$scope.updateGreeting = function () {
+$scope.greeting = "Hello, " + $scope.name + "!";
+};
+
+$scope.updateGreeting();
+
+});
