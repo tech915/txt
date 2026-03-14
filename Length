@@ -1,0 +1,12 @@
+protected void BtnSubmit_Click(object sender, EventArgs e)
+{
+    int length;
+    int breadth;
+
+    length = int.Parse(txtLength.Text);
+    breadth = int.Parse(txtBreadth.Text);
+
+    int area = length * breadth;
+
+    lblResult.Text = "Area = " + area;
+}
